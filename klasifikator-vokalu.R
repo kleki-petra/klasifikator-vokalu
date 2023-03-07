@@ -33,16 +33,14 @@ dim(training)
 dim(validating)
 dim(testing)
 
-# ggplot(tab, aes(F2, F1, color = Vowel)) +
-#   geom_point() +
-#   scale_x_reverse(position = "top") +
-#   scale_y_reverse(position = "right")
-
+ggplot(tab, aes(F2, F1, color = Vowel)) +
+   geom_point() +
+   scale_x_reverse(position = "top") +
+   scale_y_reverse(position = "right")
 
 fitControl <- trainControl(method = "repeatedcv", number = 3, repeats = 2, verboseIter = TRUE) ## 3-fold CV repeated two times, zapnutí detailních výpisů
 
 model <- train(Vowel ~ ., data = training, method = "rf", trControl = fitControl)
-
 
 ggplot(model)
 ggplot(model, metric = "Kappa")
@@ -60,4 +58,3 @@ confusionMatrix(predictions, factor(validating$Vowel))
 # vyhodnotit přesnost na testovacích datech
 predictions <- predict(model, newdata=testing)
 confusionMatrix(predictions, factor(testing$Vowel))
-
